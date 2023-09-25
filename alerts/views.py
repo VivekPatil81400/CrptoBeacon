@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -6,7 +7,22 @@ from rest_framework import status
 from .models import Alert
 from .serializers import AlertSerializer
 
-# Create your views here.
+#getting data from external api
+api_url = "https://api.coinlore.net/api/tickers/"
+
+@api_view(['GET'])
+def get_cyrptocurrency_names(request):
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json()
+        cryto_names = set(entry["name"] for entry in data["data"])
+        crypto_names_list = list(cryto_names)
+        return Response({'Cryto_names': crypto_names_list}, status=status.HTTP_200_OK)
+    else:
+        return Response({"error : Data not obtained"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+#CRUD on alerts
 @api_view(['GET'])
 def get_all_alerts(request):
     alerts = Alert.objects.all()
