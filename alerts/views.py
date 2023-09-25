@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Alert
-from .serializers import AlertSerializer
+from .serializers import AlertSerializer, CryptoDataSerializer
 
 #getting data from external api
 api_url = "https://api.coinlore.net/api/tickers/"
@@ -21,6 +21,30 @@ def get_cyrptocurrency_names(request):
     else:
         return Response({"error : Data not obtained"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@api_view(['GET'])
+def get_crypto_data(request, name):
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json()
+        crypto_data = None
+        for entry in data["data"]:
+            if entry["name"] == name:
+                crypto_data = {
+                    "Name" : entry["name"],
+                    "Price_USD" : entry["price_usd"],
+                    "Change_percentage" : entry["percent_change_24h"]
+                }
+                break
+        if crypto_data:
+            serializer = CryptoDataSerializer(data = crypto_data)
+            if serializer.is_valid():
+                return Response(serializer.validated_data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"Error": "No such Cryptocurrency"}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response({"Error": "Failed to fetch data from api"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 #CRUD on alerts
 @api_view(['GET'])

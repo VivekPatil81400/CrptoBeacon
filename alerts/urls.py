@@ -10,11 +10,5 @@ urlpatterns = [
 
 
     path('get_cyrptocurrency_names/', views.get_cyrptocurrency_names, name="get_cyrptocurrency_names"),
+    path('get_crypto_data/<str:name>', views.get_crypto_data, name="get_crypto_data"),
 ]
-
-# {
-#     "name": "Tether",
-#     "low_amount": 0.5,
-#     "high_amount": 1.5,
-#     "percentage_change": 0.25
-# }
