@@ -7,6 +7,9 @@ from rest_framework import status
 from .models import Alert
 from .serializers import AlertSerializer, CryptoDataSerializer
 
+
+
+
 #getting data from external api
 api_url = "https://api.coinlore.net/api/tickers/"
 
@@ -46,10 +49,13 @@ def get_crypto_data(request, name):
     else:
         return Response({"Error": "Failed to fetch data from api"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+
 #CRUD on alerts
 @api_view(['GET'])
 def get_all_alerts(request):
-    alerts = Alert.objects.all()
+    alerts = Alert.objects.filter(user=request.user)
     serialiazer = AlertSerializer(alerts, many=True)
     return Response(serialiazer.data)
 
@@ -61,6 +67,7 @@ def get_alert(request, pk):
 
 @api_view(['POST'])
 def create_alert(request):
+    request.data['user'] = request.user.id
     serialiazer = AlertSerializer(data=request.data)
     if serialiazer.is_valid():
         serialiazer.save()
@@ -71,7 +78,7 @@ def create_alert(request):
 @api_view(['PUT'])
 def update_alert(request,pk):
     try:
-        alert = Alert.objects.get(id=pk)
+        alert = Alert.objects.get(id=pk, user=request.user)
     except Alert.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
