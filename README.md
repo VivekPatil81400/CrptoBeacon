@@ -17,5 +17,5 @@ Cryptobeacon is a Django-based web application that allows users to set alerts f
   - Real-time data ensures that users receive timely alerts based on the latest market conditions.
 
 - **Email Notifications:**
-  - Users receive email notifications when cryptocurrency prices cross the defined thresholds.
+  - Users receive email notifications when cryptocurrency prices cross the defined thresholds.(work in progress)
   - Email notifications are sent using Django's email sending functionality.
