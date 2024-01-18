@@ -8,5 +8,5 @@ class AlertSerializer(serializers.ModelSerializer):
 
 class CryptoDataSerializer(serializers.Serializer):
     Name = serializers.CharField()
-    Price_USD = serializers.DecimalField(max_digits=10, decimal_places=8)
+    Price_USD = serializers.DecimalField(max_digits=18, decimal_places=8)
     Change_percentage = serializers.DecimalField(max_digits=5, decimal_places=2)
