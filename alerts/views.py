@@ -104,16 +104,14 @@ from .models import Alert
 def your_model_list(request):
     object_list = Alert.objects.all()
     
-    paginator = Paginator(object_list, 10)  # Show 10 objects per page
+    paginator = Paginator(object_list, 10)
 
     page = request.GET.get('page')
     try:
         objects = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver the first page.
         objects = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver the last page of results.
         objects = paginator.page(paginator.num_pages)
 
     return render(request, 'your_model_list.html', {'objects': objects})
