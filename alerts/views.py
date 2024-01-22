@@ -94,3 +94,26 @@ def delete_alert(request, pk):
     alert = Alert.objects.get(id=pk)
     alert.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
+from .models import Alert
+
+def your_model_list(request):
+    object_list = Alert.objects.all()
+    
+    paginator = Paginator(object_list, 10)  # Show 10 objects per page
+
+    page = request.GET.get('page')
+    try:
+        objects = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page.
+        objects = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver the last page of results.
+        objects = paginator.page(paginator.num_pages)
+
+    return render(request, 'your_model_list.html', {'objects': objects})
