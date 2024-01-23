@@ -104,7 +104,7 @@ def delete_alert(request, pk):
 # def get_all_alerts(request):
 #     alerts = Alert.objects.all()
     #   serializer = AlertSerializer(alerts, many = True)
-#     paginator = Paginator(object_list, 10)
+#     paginator = Paginator(serializer, 10)
 
 #     page = request.GET.get('page')
 #     try:
@@ -114,4 +114,19 @@ def delete_alert(request, pk):
 #     except EmptyPage:
 #         objects = paginator.page(paginator.num_pages)
 
-    return render(request, 'your_model_list.html', {'objects': objects})
+    # return render(request, 'your_model_list.html', {'objects': objects})
+
+# def get_alert(request, pk):
+    # alert = Alert.objects.get(id=pk)
+    # serializer = AlertSerializer(alert)
+#     paginator = Paginator(serializer, 10)
+
+#     page = request.GET.get('page')
+#     try:
+#         objects = paginator.page(page)
+#     except PageNotAnInteger:
+#         objects = paginator.page(1)
+#     except EmptyPage:
+#         objects = paginator.page(paginator.num_pages)
+
+    # return render(request, 'your_model_list.html', {'objects': objects})
