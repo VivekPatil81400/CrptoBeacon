@@ -97,21 +97,21 @@ def delete_alert(request, pk):
 
 
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
-from .models import Alert
+# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# from django.shortcuts import render
+# from .models import Alert
 
-def your_model_list(request):
-    object_list = Alert.objects.all()
-    
-    paginator = Paginator(object_list, 10)
+# def get_all_alerts(request):
+#     alerts = Alert.objects.all()
+    #   serializer = AlertSerializer(alerts, many = True)
+#     paginator = Paginator(object_list, 10)
 
-    page = request.GET.get('page')
-    try:
-        objects = paginator.page(page)
-    except PageNotAnInteger:
-        objects = paginator.page(1)
-    except EmptyPage:
-        objects = paginator.page(paginator.num_pages)
+#     page = request.GET.get('page')
+#     try:
+#         objects = paginator.page(page)
+#     except PageNotAnInteger:
+#         objects = paginator.page(1)
+#     except EmptyPage:
+#         objects = paginator.page(paginator.num_pages)
 
     return render(request, 'your_model_list.html', {'objects': objects})
