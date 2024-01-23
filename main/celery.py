@@ -12,6 +12,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'fetch-bitcoin-price': {
         'task': 'alerts.tasks.fetch_bitcoin_price',
-        'schedule': 3.0,
+        'schedule': 5.0,
     },
 }
